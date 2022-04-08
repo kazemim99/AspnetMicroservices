@@ -44,8 +44,11 @@ namespace Catalog.Api.Data
             var filter = Builders<T>.Filter.Eq(func, value);
 
             if (obj != null)
+            {
                 await Collection.ReplaceOneAsync(_clientSessionHandle, filter, obj);
+            }
             _clientSessionHandle.CommitTransaction();
+
         }
 
         public async Task DeleteAsync(string id)

@@ -14,7 +14,7 @@ namespace Catalog.Api.Data
             IMongoClient mongoClient,
             IClientSessionHandle clientSessionHandle,
             DatabaseSettings settings)
-            : base(mongoClient, clientSessionHandle,settings, "Product")
+            : base(mongoClient, clientSessionHandle, settings, "Product")
         {
         }
 
@@ -27,15 +27,15 @@ namespace Catalog.Api.Data
         public async Task<IEnumerable<Product>> GetProductsAsync() =>
             await Collection.AsQueryable().ToListAsync();
 
-        //public async Task<IEnumerable<Product>> GetBooksAsync(string ProductId)
-        //{
-        //    var filter = Builders<Product>.Filter.Eq(s => s.Id, ProductId);
-        //    return await Collection.Find(filter).Project(p => p.Books).FirstOrDefaultAsync();
-        //}
 
         public async Task<IEnumerable<Product>> GetProductsByNameAsync(string name)
         {
             var filter = Builders<Product>.Filter.Eq(s => s.Name, name);
+            return await Collection.Find(filter).ToListAsync();
+        }
+        public async Task<IEnumerable<Product>> GetProductByCategoryName(string name)
+        {
+            var filter = Builders<Product>.Filter.Eq(s => s.Categroy, name);
             return await Collection.Find(filter).ToListAsync();
         }
     }

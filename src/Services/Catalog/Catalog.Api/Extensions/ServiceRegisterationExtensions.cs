@@ -1,4 +1,5 @@
-﻿using Catalog.Api.Settings;
+﻿using Catalog.Api.Data;
+using Catalog.Api.Settings;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -10,6 +11,11 @@ namespace Catalog.Api.Extensions
 {
     public static class ServiceRegisterationExtensions
     {
+
+        public static void RegisterServices(this IServiceCollection services)
+        {
+            services.AddTransient<IProductRepository, ProductRepository>();
+        }
         public static void SetupSettings(this IServiceCollection service, IConfiguration configuration)
         {
             var databaseSettings = new DatabaseSettings();

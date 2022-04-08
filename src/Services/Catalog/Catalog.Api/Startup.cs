@@ -44,9 +44,8 @@ namespace Catalog.Api
                     ("DatabaseSettings:ConnectionString"));
             });
 
-            services.AddScoped(c =>c.GetService<IMongoClient>().StartSession());
-
-            services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddScoped(c => c.GetService<IMongoClient>().StartSession());
+            services.RegisterServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
