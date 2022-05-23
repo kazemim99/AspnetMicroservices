@@ -15,6 +15,28 @@ services:
     ports:
       - "6379:6379"
 
+  discountdb:
+   container_name: discountdb
+   restart: always
+   environment:
+     - POSTGRES_PASSWORD= 1q2w3e4r
+     - POSTGRES_USER= admin
+     - POSTGRES_DB= Discount_DB
+   ports:
+      - 5432:5432
+   volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  portainer:
+    container_name: portainer
+    restart: always
+    ports:
+      - "8080:8000"
+      - "9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+
   catalog.api:
     container_name: catalog.api
     environment:
@@ -34,4 +56,16 @@ services:
       - basketdb
     ports:
       - "8001:80"
+  discount.api:
+    container_name: discount.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:Default=Host=discountdb;Database=Discount_DB;Port=5432;;Username=admin;Password=1q2w3e4r"
+    depends_on:
+      - discountdb
+    ports:
+      - "8002:80"
+
+
+ 
 
