@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+option csharp_namespace = "Discount.Grpc.Protos";
+
+service DiscountPotoService {
+	rpc GetDicount(GetDicountRequest) returns (GetDicountReponse);
+	rpc GetAllDicount(GetAllDicountRequest) returns (GetAllDicountResponse);
+	rpc CreateDiscount(CreateDisountRequest) returns (CreateDisountResponse);
+	rpc UpdateDiscount(UpdateDisountRequest) returns (UpdateDisountResponse);
+	rpc DeleteDiscount(DeleteDisountRequest)returns (DeleteDisountResponse);
+}
+
+message GetDicountRequest {
+	string productName =1;
+}
+message GetAllDicountRequest{
+
+}
+message GetAllDicountResponse{
+	repeated GetDicountReponse model=1;
+}
+
+message GetDicountReponse {
+	int32 id = 1;
+	string productName = 2;
+	string description = 3;
+	int32 amount= 4;
+}
+
+message CreateDisountRequest{
+	string productName = 2;
+	string description = 3;
+	int32 amount= 4;
+	}
+
+	message CreateDisountResponse{
+	string productName = 2;
+	string description = 3;
+	int32 amount= 4;
+	}
+
+	message UpdateDisountRequest{ 
+	int32 id = 1;
+	string productName = 2;
+	string description = 3;
+	int32 amount= 4;
+	}
+	message UpdateDisountResponse {
+	string id =1;
+	}
+	message DeleteDisountRequest {
+	string productName =1;
+	}
+
+	message DeleteDisountResponse {
+	}
+ 
