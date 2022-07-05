@@ -1,8 +1,6 @@
-using Basket.Api.GrpcServices;
-using Basket.Api.Repositories;
-using Discount.Grpc.Protos;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,7 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Basket.Api
+namespace UserMangemnt.Api
 {
     public class Startup
     {
@@ -30,16 +28,10 @@ namespace Basket.Api
         {
 
             services.AddControllers();
-            services.AddStackExchangeRedisCache(option =>
-            option.Configuration = Configuration.GetValue<string>("RedisSettings:ConnectionString")
-            );
-            services.AddScoped<IBasketRepository, BasketRepository>();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Basket.Api", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "UserMangemnt.Api", Version = "v1" });
             });
-            services.AddGrpcClient<DiscountPotoService.DiscountPotoServiceClient>(o => o.Address = new Uri(Configuration["GrpSettings:DiscountURL"]));
-            services.AddScoped<IDiscountGrpcService, DiscountGrpcService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,8 +41,10 @@ namespace Basket.Api
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Basket.Api v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "UserMangemnt.Api v1"));
             }
+
+            app.UseHttpsRedirection();
 
             app.UseRouting();
 

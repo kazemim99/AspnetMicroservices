@@ -18,7 +18,6 @@ namespace Discount.Grpc.Mapper
             CreateMap<UpdateDisountRequest, Coupon>().ReverseMap();
             CreateMap<Coupon, CreateDisountResponse>().ReverseMap();
             CreateMap<Coupon, UpdateDisountResponse>().ReverseMap();
-
             CreateMap<Coupon, GetAllDicountResponse>();
         }
     }
